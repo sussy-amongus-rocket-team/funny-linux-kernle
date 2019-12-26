@@ -49,9 +49,6 @@
 	vdd_cpux: gpio-regulator {
 		compatible = "regulator-gpio";
 
-		pinctrl-names = "default";
-		pinctrl-0 = <&vdd_cpux_r_npi>;
-
 		regulator-name = "vdd-cpux";
 		regulator-type = "voltage";
 		regulator-boot-on;
@@ -117,6 +114,11 @@
 			hysteresis = <2000>;
 			type = "passive";
 		};
+		cpu_alert_hot: cpu_alert_hot {
+			temperature = <90000>;
+			hysteresis = <2000>;
+			type = "passive";
+		};
 		cpu_crit: cpu_crit {
 			temperature = <100000>;
 			hysteresis = <2000>;
@@ -137,8 +139,8 @@
 			trip = <&cpu_very_hot>;
 			cooling-device = <&cpu0 THERMAL_NO_LIMIT 3>;
 		};
-		cpu_crit_limit_cpu {
-			trip = <&cpu_very_hot>;
+		cpu_alert_hot_limit_cpu {
+			trip = <&cpu_alert_hot>;
 			cooling-device = <&cpu0 4 THERMAL_NO_LIMIT>;
 		};
 	};
@@ -171,10 +173,14 @@
 	non-removable;
 	status = "okay";
 
+	/* compitable with ap6212/ap6256 */
 	brcmf: bcrmf@1 {
-        reg = <1>;
-        	compatible = "brcm,bcm4329-fmac";
-    	};
+		reg = <1>;
+		compatible = "brcm,bcm4329-fmac";
+		interrupt-parent = <&pio>;
+		interrupts = <6 10 IRQ_TYPE_LEVEL_HIGH>; /* PG10 / EINT10 */
+		interrupt-names = "host-wake";
+	};
 };
 
 &mmc2 {

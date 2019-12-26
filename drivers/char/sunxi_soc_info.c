@@ -15,15 +15,21 @@
 #define BOARD_TYPE_NANOPI_HERO            (7)
 #define BOARD_TYPE_NANOPI_DUO2            (8)
 #define BOARD_TYPE_NANOPI_R1              (9)
+#define BOARD_TYPE_NANOPI_NEO_S           (10)
+#define BOARD_TYPE_ZEROPI                 (11)
+#define BOARD_TYPE_NANOPI_R1S_H3          (12)
 
 
 // H5
-#define BOARD_TYPE_NANOPI_NEO_CORE2       (0)       // 00
-#define BOARD_TYPE_NANOPI_NEO2            (1)       // 01
-#define BOARD_TYPE_NANOPI_NEO_PLUS2       (2)       // 10
-#define BOARD_TYPE_NANOPI_M1_PLUS2        (3)       // 11
-#define BOARD_TYPE_NANOPI_K1_PLUS         (4)       // 11-(PG12=0)
-#define BOARD_TYPE_NANOPI_NEO2_V11        (5)       // 01-(PL3=0)
+#define BOARD_TYPE_NANOPI_NEO_CORE2       (0)
+#define BOARD_TYPE_NANOPI_NEO2            (1)
+#define BOARD_TYPE_NANOPI_NEO_PLUS2       (2)
+#define BOARD_TYPE_NANOPI_M1_PLUS2        (3)
+#define BOARD_TYPE_NANOPI_K1_PLUS         (4)
+#define BOARD_TYPE_NANOPI_NEO2_V11        (5)
+#define BOARD_TYPE_NANOPI_NEO2_BLACK      (6)
+#define BOARD_TYPE_NANOPI_R1S_H5          (7)
+
 
 static unsigned int sunxi_get_board_vendor_id(void)
 {
@@ -64,12 +70,17 @@ static ssize_t sys_info_show(struct class *class, struct class_attribute *attr,
         || !strcasecmp("FriendlyElec NanoPi-K1", dt_machine_name)\
         || !strcasecmp("FriendlyElec NanoPi-Hero", dt_machine_name)\
         || !strcasecmp("FriendlyElec NanoPi-Duo2", dt_machine_name)\
-        || !strcasecmp("FriendlyElec NanoPi-R1", dt_machine_name)) {
+        || !strcasecmp("FriendlyElec NanoPi-R1", dt_machine_name)\
+        || !strcasecmp("FriendlyElec NanoPi-NEO-S", dt_machine_name)\
+        || !strcasecmp("FriendlyElec ZeroPi", dt_machine_name)\
+        || !strcasecmp("FriendlyElec NanoPi-R1S-H3", dt_machine_name)) {
         size += sprintf(buf + size, "sunxi_platform    : sun8iw7p1\n");
     } else if (!strcasecmp("FriendlyElec NanoPi-NEO-Core2", dt_machine_name) \
-	 || !strcasecmp("FriendlyElec NanoPi-NEO2", dt_machine_name) \
-	 || !strcasecmp("FriendlyElec NanoPi-NEO-Plus2", dt_machine_name) \
+	    || !strcasecmp("FriendlyElec NanoPi-NEO2", dt_machine_name) \
+	    || !strcasecmp("FriendlyElec NanoPi-NEO-Plus2", dt_machine_name) \
         || !strcasecmp("FriendlyElec NanoPi-M1-Plus2", dt_machine_name) \
+        || !strcasecmp("FriendlyElec NanoPi-NEO2-Black", dt_machine_name) \
+        || !strcasecmp("FriendlyElec NanoPi-R1S-H5", dt_machine_name) \
         || !strcasecmp("FriendlyElec NanoPi-K1-Plus", dt_machine_name)) {
         size += sprintf(buf + size, "sunxi_platform    : sun50iw2p1\n");
     } else {
@@ -103,6 +114,16 @@ static ssize_t sys_info_show(struct class *class, struct class_attribute *attr,
         size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_DUO2);		// diff from neo/neo-core
     else if (!strcasecmp("FriendlyElec NanoPi-R1", dt_machine_name))
         size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_R1);		// diff from m1
+    else if (!strcasecmp("FriendlyElec NanoPi-NEO-S", dt_machine_name))
+        size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_NEO_S);
+    else if (!strcasecmp("FriendlyElec ZeroPi", dt_machine_name))
+        size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_ZEROPI);
+    else if (!strcasecmp("FriendlyElec NanoPi-NEO2-Black", dt_machine_name))
+        size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_NEO2_BLACK);
+    else if (!strcasecmp("FriendlyElec NanoPi-R1S-H3", dt_machine_name))
+        size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_R1S_H3);
+    else if (!strcasecmp("FriendlyElec NanoPi-R1S-H5", dt_machine_name))
+        size += sprintf(buf + size, "sunxi_board_id    : %d(0)\n", BOARD_TYPE_NANOPI_R1S_H5);
     else {
         databuf[0] = sunxi_get_board_vendor_id();
         size += sprintf(buf + size, "sunxi_board_id    : %d(%d)\n", (databuf[0]<0)?(-1):(databuf[0]&~(0xe0)), (databuf[0]<0)?(-1):((databuf[0]>>5)&0x01));

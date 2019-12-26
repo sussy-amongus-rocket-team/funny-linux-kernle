@@ -95,13 +95,13 @@
 		pinctrl-0 = <&leds_npi>, <&leds_r_npi>;
 
 		status {
-			label = "nanopi:blue:status";
+			label = "status_led";
 			gpios = <&pio 0 10 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "heartbeat";
 		};
 
 		pwr {
-			label = "nanopi:green:pwr";
+			label = "LED2";
 			gpios = <&r_pio 0 10 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
 		};
@@ -123,9 +123,6 @@
 
 	vdd_cpux: gpio-regulator {
 		compatible = "regulator-gpio";
-
-		pinctrl-names = "default";
-		pinctrl-0 = <&vdd_cpux_r_npi>;
 
 		regulator-name = "vdd-cpux";
 		regulator-type = "voltage";
@@ -189,7 +186,7 @@
 
 	reg_vdd_cpux: vdd-cpux {
 		compatible = "regulator-fixed";
-		regulator-name = "vdd-cpux";
+		regulator-name = "vdd-cpux-en";
 		regulator-min-microvolt = <1200000>;
 		regulator-max-microvolt = <1200000>;
 		regulator-always-on;
@@ -287,8 +284,7 @@
 
 &mmc0 {
 	bus-width = <4>;
-	cd-gpios = <&pio 5 6 GPIO_ACTIVE_HIGH>;
-	cd-inverted;
+	non-removable;
 	pinctrl-names = "default";
 	pinctrl-0 = <&mmc0_pins_a>, <&mmc0_cd_pin>;
 	boot_device = <0>;
@@ -320,12 +316,6 @@
 	sw_r_npi: key_pins {
 		pins = "PL3";
 		function = "gpio_in";
-	};
-	vdd_cpux_r_npi: regulator_pins@0 {
-		allwinner,pins = "PL6";
-		allwinner,function = "gpio_out";
-		allwinner,drive = <SUN4I_PINCTRL_10_MA>;
-		allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
 	};
 };
 
@@ -442,7 +432,7 @@
  		ti,debounce-tol = <30>;
  		ti,debounce-rep = <1>;
  	};
-
+ 
 
 };
 

@@ -100,7 +100,7 @@
         };
 
         status {
-            label = "nanopi:blue:status";
+            label = "status_led";
             gpios = <&pio 0 10 GPIO_ACTIVE_HIGH>;
             linux,default-trigger = "heartbeat";
         };
@@ -118,8 +118,6 @@
 
     reg_gmac_3v3: gmac-3v3 {
         compatible = "regulator-fixed";
-        pinctrl-names = "default";
-        pinctrl-0 = <&gmac_power_pin_nanopi>;
         regulator-name = "gmac-3v3";
         regulator-min-microvolt = <3300000>;
         regulator-max-microvolt = <3300000>;
@@ -204,6 +202,7 @@
     pinctrl-names = "default";
     pinctrl-0 = <&mmc0_pins_a>, <&mmc0_cd_pin>;
     vmmc-supply = <&reg_vcc3v3>;
+    non-removable;
     bus-width = <4>;
     cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>; /* PF6 */
     boot_device = <0>;
@@ -219,10 +218,6 @@
         pins = "PA10";
         function = "gpio_out";
     };
-    gmac_power_pin_nanopi: gmac_power_pin@0 {
-        pins = "PD6";
-        function = "gpio_out";
-    };
     spi0_cs_pins: spi0_cs_pins {
         pins = "PC3", "PA6";
         function = "gpio_out";
@@ -233,12 +228,6 @@
     leds_r_npi: led_pins@0 {
         pins = "PL10";
         function = "gpio_out";
-    };
-    vdd_cpux_r_npi: regulator_pins@0 {
-        allwinner,pins = "PL6";
-        allwinner,function = "gpio_out";
-        allwinner,drive = <SUN4I_PINCTRL_10_MA>;
-        allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
     };
 };
 
@@ -341,6 +330,7 @@
         buswidth = <8>;
         dc-gpios = <&pio 0 1 GPIO_ACTIVE_HIGH>;     /* PA1 */
         reset-gpios = <&pio 6 11 GPIO_ACTIVE_HIGH>; /* PG11 */
+        led-gpios = <&pio 0 0 GPIO_ACTIVE_LOW>;  /* PA0 */
         debug = <0x0>;
     };
 

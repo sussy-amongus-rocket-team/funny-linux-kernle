@@ -44,7 +44,7 @@
 
 / {
 	model = "FriendlyElec NanoPi-R1";
-	compatible = "friendlyarm,nanopi-r1", "allwinner,sun8i-h3";
+	compatible = "friendlyelec,nanopi-r1", "allwinner,sun8i-h3";
 
 	wifi_pwrseq: wifi_pwrseq {
 		compatible = "mmc-pwrseq-simple";
@@ -56,8 +56,6 @@
 
 	reg_gmac_3v3: gmac-3v3 {
 		compatible = "regulator-fixed";
-		pinctrl-names = "default";
-		pinctrl-0 = <&gmac_power_pin_nanopi>;
 		regulator-name = "gmac-3v3";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
@@ -80,8 +78,8 @@
 	leds {
 		/delete-node/ status;
 		/delete-node/ pwr;
-		led1 {
-			label = "LED1";
+		status {
+			label = "status_led";
 			gpios = <&pio 0 10 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "heartbeat";
 		};
@@ -117,10 +115,6 @@
 };
 
 &pio {
-	gmac_power_pin_nanopi: gmac_power_pin@0 {
-		pins = "PD6";
-		function = "gpio_out";
-	};
 	bt_pwr_pin: bt_pwr_pin@0 {
 		pins = "PG13";
 		function = "gpio_out";
