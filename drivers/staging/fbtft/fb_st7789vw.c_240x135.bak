@@ -105,7 +105,7 @@ static int init_display(struct fbtft_par *par)
 
     printk("Initting screen...\n");
 
-//************* Start Initial Sequence **********//
+//************* Start Initial Sequence **********// 
 //    LCD_Write_Command(par, 0x36);
 //    LCD_WriteData_Byte(par, 0x70);
 //    if(USE_HORIZONTAL==0)LCD_WriteData_Byte(par,0x00);

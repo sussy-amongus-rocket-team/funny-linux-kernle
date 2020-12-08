@@ -1,0 +1,15 @@
+#include "sun8i-h3-nanopi.dtsi"
+
+/ {
+	model = "Pengzhihui Unit-LinuxSever";
+	compatible = "friendlyelec,nanopi-neo-core", "allwinner,sun8i-h3";
+};
+
+
+&i2c2_pins {
+   bias-pull-up;
+};
+
+&i2c0_pins {
+   bias-pull-up;
+};

@@ -41,7 +41,7 @@ module_param(rotate, uint,
 MODULE_PARM_DESC(rotate,
 "Angle to rotate display counter clockwise: 0, 90, 180, 270");
 
-static unsigned int busnum;
+static unsigned int busnum = 1;
 module_param(busnum, uint,
 0000);
 MODULE_PARM_DESC(busnum,
@@ -1291,6 +1291,24 @@ static struct fbtft_device_display displays[] = {
                                 .gpios = (const struct fbtft_gpio[]) {
                                         {"reset", 24},
                                         {"dc",    25},
+                                        {},
+                                },
+                        }
+                }
+        },
+        {
+                .name = "ips_114inch_240_135",
+                .spi = &(struct spi_board_info) {
+                        .modalias = "fb_st7789vw",
+                        .max_speed_hz = 50000000,
+                        .mode = SPI_MODE_3,
+                        .platform_data = &(struct fbtft_platform_data) {
+                                .display = {
+                                        .buswidth = 8,
+                                },
+                                .gpios = (const struct fbtft_gpio[]) {
+                                        {"reset", 8},
+                                        {"dc",    7},
                                         {},
                                 },
                         }
