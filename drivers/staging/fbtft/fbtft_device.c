@@ -26,10 +26,11 @@
 
 #define MAX_GPIOS 32
 
+static char *name="ips_114inch_240_135";
+
 static struct spi_device *spi_device;
 static struct platform_device *p_device;
 
-static char *name;
 module_param(name, charp,
 0000);
 MODULE_PARM_DESC(name,
@@ -41,7 +42,7 @@ module_param(rotate, uint,
 MODULE_PARM_DESC(rotate,
 "Angle to rotate display counter clockwise: 0, 90, 180, 270");
 
-static unsigned int busnum = 1;
+static unsigned int busnum = 0;
 module_param(busnum, uint,
 0000);
 MODULE_PARM_DESC(busnum,
@@ -1307,8 +1308,8 @@ static struct fbtft_device_display displays[] = {
                                         .buswidth = 8,
                                 },
                                 .gpios = (const struct fbtft_gpio[]) {
-                                        {"reset", 8},
-                                        {"dc",    7},
+                                        {"reset", 1},
+                                        {"dc",    0},
                                         {},
                                 },
                         }

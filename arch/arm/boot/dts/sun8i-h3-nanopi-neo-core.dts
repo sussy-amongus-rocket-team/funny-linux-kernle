@@ -43,7 +43,7 @@
 #include "sun8i-h3-nanopi.dtsi"
 
 / {
-	model = "FriendlyElec NanoPi-NEO-Core";
+	model = "Linux-Card";
 	compatible = "friendlyelec,nanopi-neo-core", "allwinner,sun8i-h3";
 	
 
